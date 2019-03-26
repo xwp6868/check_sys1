@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.alibaba.check.mapper.ImportCheckMapper">
+
+    <resultMap id="BaseResultMap" type="com.alibaba.check.pojo.AliCheck">
+        <id column="check_id" property="checkId" jdbcType="INTEGER"/>
+        <result column="wb_number" property="wbNumber" jdbcType="VARCHAR"/>
+        <result column="work_number" property="workNumber" jdbcType="VARCHAR"/>
+        <result column="work_time" property="workTime" jdbcType="VARCHAR"/>
+        <result column="up_time" property="upTime" jdbcType="VARCHAR"/>
+        <result column="down_time" property="downTime" jdbcType="VARCHAR"/>
+        <result column="work_state" property="workState" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="column_List">
+        wb_number,work_time,up_time,down_time,work_state
+    </sql>
+
+    <select id="selectImportCheck" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_List"/>
+        FROM ali_check
+    </select>
+
+    <insert id="addUser" parameterType="com.alibaba.check.pojo.AliCheck">
+        INSERT INTO ali_check (wb_number,work_number,work_time,up_time,down_time,work_state) VALUES (#{wbNumber},#{workNumber},#{workTime},#{upTime},#{downTime},#{workState})
+    </insert>
+
+
+</mapper>

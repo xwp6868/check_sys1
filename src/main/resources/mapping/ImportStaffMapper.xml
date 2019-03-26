@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.alibaba.check.mapper.ImportStaffMapper">
+
+    <resultMap id="BaseResultMap" type="com.alibaba.check.pojo.AliStaff">
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="work_number" property="workNumber" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="entry_time" property="entryTime" jdbcType="DATE"/>
+    </resultMap>
+
+    <sql id="column_List">
+        work_number,name,entry_time
+    </sql>
+
+    <select id="selectImportStaff" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_List"/>
+        FROM ali_staff
+    </select>
+
+    <update id="updateUserByName" parameterType="com.alibaba.check.pojo.AliStaff">
+      update ali_staff set name=#{name},entry_time=#{entryTime} where work_number = #{workNumber}
+    </update>
+
+    <insert id="addUser" parameterType="com.alibaba.check.pojo.AliStaff">
+        INSERT INTO ali_staff (work_number,name,entry_time) VALUES (#{workNumber},#{name},#{entryTime})
+    </insert>
+    <!-- 去重 -->
+    <select id="selectByName" resultType="Integer">
+        SELECT count(*) FROM ali_staff WHERE work_number=#{workNumber}
+    </select>
+
+</mapper>

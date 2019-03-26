@@ -1,0 +1,31 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: check-sys#考勤系统
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/checkdb
+  mvc:
+    view:
+      prefix: /WEB-INF/view/
+      suffix: .jsp
+  jackson:
+     #设置时间格式
+      date-format: yyyy-MM-dd HH:mm:ss
+       #设置时区
+      time-zone: GMT+8
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: com.winter.model  # 注意：对应实体类的路径
+
+#pagehelper分页插件
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql

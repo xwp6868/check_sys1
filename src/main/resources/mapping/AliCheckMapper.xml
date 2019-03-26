@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.alibaba.check.mapper.AliCheckMapper" >
+  <resultMap id="BaseResultMap" type="com.alibaba.check.pojo.AliCheck" >
+    <id column="check_id" property="checkId" jdbcType="INTEGER" />
+    <result column="wb_number" property="wbNumber" jdbcType="VARCHAR" />
+    <result column="work_number" property="workNumber" jdbcType="VARCHAR" />
+    <result column="up_time" property="upTime" jdbcType="TIMESTAMP" />
+    <result column="down_time" property="downTime" jdbcType="TIMESTAMP" />
+    <result column="work_time" property="workTime" jdbcType="DOUBLE" />
+    <result column="work_state" property="workState" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    check_id, wb_number, up_time, down_time, work_time, work_state
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.alibaba.check.pojo.AliCheckExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ali_check
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ali_check
+    where check_id = #{checkId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ali_check
+    where check_id = #{checkId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.alibaba.check.pojo.AliCheckExample" >
+    delete from ali_check
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.alibaba.check.pojo.AliCheck" >
+    insert into ali_check (check_id, wb_number, up_time, 
+      down_time, work_time, work_state, 
+      user_id)
+    values (#{checkId,jdbcType=INTEGER}, #{wbNumber,jdbcType=VARCHAR}, #{upTime,jdbcType=TIMESTAMP}, 
+      #{downTime,jdbcType=TIMESTAMP}, #{workTime,jdbcType=DOUBLE}, #{workState,jdbcType=CHAR}, 
+      #{userId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.alibaba.check.pojo.AliCheck" >
+    insert into ali_check
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="checkId != null" >
+        check_id,
+      </if>
+      <if test="wbNumber != null" >
+        wb_number,
+      </if>
+      <if test="upTime != null" >
+        up_time,
+      </if>
+      <if test="downTime != null" >
+        down_time,
+      </if>
+      <if test="workTime != null" >
+        work_time,
+      </if>
+      <if test="workState != null" >
+        work_state,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="checkId != null" >
+        #{checkId,jdbcType=INTEGER},
+      </if>
+      <if test="wbNumber != null" >
+        #{wbNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="upTime != null" >
+        #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="downTime != null" >
+        #{downTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="workTime != null" >
+        #{workTime,jdbcType=DOUBLE},
+      </if>
+      <if test="workState != null" >
+        #{workState,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.alibaba.check.pojo.AliCheckExample" resultType="java.lang.Integer" >
+    select count(*) from ali_check
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ali_check
+    <set >
+      <if test="record.checkId != null" >
+        check_id = #{record.checkId,jdbcType=INTEGER},
+      </if>
+      <if test="record.wbNumber != null" >
+        wb_number = #{record.wbNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upTime != null" >
+        up_time = #{record.upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.downTime != null" >
+        down_time = #{record.downTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.workTime != null" >
+        work_time = #{record.workTime,jdbcType=DOUBLE},
+      </if>
+      <if test="record.workState != null" >
+        work_state = #{record.workState,jdbcType=CHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ali_check
+    set check_id = #{record.checkId,jdbcType=INTEGER},
+      wb_number = #{record.wbNumber,jdbcType=VARCHAR},
+      up_time = #{record.upTime,jdbcType=TIMESTAMP},
+      down_time = #{record.downTime,jdbcType=TIMESTAMP},
+      work_time = #{record.workTime,jdbcType=DOUBLE},
+      work_state = #{record.workState,jdbcType=CHAR},
+      user_id = #{record.userId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.alibaba.check.pojo.AliCheck" >
+    update ali_check
+    <set >
+      <if test="wbNumber != null" >
+        wb_number = #{wbNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="upTime != null" >
+        up_time = #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="downTime != null" >
+        down_time = #{downTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="workTime != null" >
+        work_time = #{workTime,jdbcType=DOUBLE},
+      </if>
+      <if test="workState != null" >
+        work_state = #{workState,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where check_id = #{checkId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.alibaba.check.pojo.AliCheck" >
+    update ali_check
+    set wb_number = #{wbNumber,jdbcType=VARCHAR},
+      up_time = #{upTime,jdbcType=TIMESTAMP},
+      down_time = #{downTime,jdbcType=TIMESTAMP},
+      work_time = #{workTime,jdbcType=DOUBLE},
+      work_state = #{workState,jdbcType=CHAR},
+      user_id = #{userId,jdbcType=INTEGER}
+    where check_id = #{checkId,jdbcType=INTEGER}
+  </update>
+
+
+
+  <resultMap type="com.alibaba.check.pojo.vo.StatisticsVO" id="CheckResult">
+    <result column="uname" property="uname" />
+    <result column="worknum" property="workNumber"/>
+    <result column="totaldays" property="attencDays"/>
+    <result column="sciktimes" property="sciktimes"/>
+  </resultMap>
+
+  <select id="selectByPrimary"  resultType="map">
+SELECT name,work_time,up_time,down_time,work_state from
+ ali_staff a inner join ali_check b on a.work_number=b.work_number where a.work_number=#{workNumber}
+  </select>
+
+  <insert id="insertWorkState" parameterType="com.alibaba.check.pojo.AliCheck">
+  insert into ali_check (work_state) values (#{workState})
+  </insert>
+
+  <select id="dropStatistics">
+    drop table if exists ali_statistics;
+  </select>
+
+  <select id="createStatistics">
+    CREATE TABLE ali_statistics (
+        wb_number varchar(255) DEFAULT NULL,
+        name varchar(255) DEFAULT NULL,
+        totadays int(2) DEFAULT NULL,
+        attencDays int(1) DEFAULT NULL,
+        affairtimes int(1) DEFAULT NULL,
+        sciktimes int(1) DEFAULT NULL,
+        latetimes int(1) DEFAULT NULL,
+        leaveearlytimes int(1) DEFAULT NULL,
+        minerstimes int(1) DEFAULT NULL
+     )
+  </select>
+
+  <insert id="insertStatistics">
+    INSERT INTO ali_statistics SELECT wb_number,name,
+(SELECT day(LAST_DAY(work_time))) as totadays,
+	work_state in (0,3,4) as attencDays,
+			work_state=1 as affairtimes,
+			work_state=2 as sciktimes,
+			work_state=3 as latetimes,
+			work_state=4 as leaveearlytimes,
+			work_state=5 as minerstimes
+FROM ali_check a left JOIN ali_staff b on a.work_number=b.work_number
+  </insert>
+
+  <select id="countInfos" resultType="map">
+    SELECT wb_number,name,totadays,
+	SUM(attencDays) as attencDays,
+	SUM(affairtimes) as affairtimes,
+	SUM(sciktimes) as sciktimes,
+	SUM(latetimes) as latetimes,
+	SUM(leaveearlytimes) as leaveearlytimes,
+	SUM(minerstimes) as minerstimes
+from ali_statistics GROUP BY wb_number
+
+  </select>
+  <!--  自定义操作  -->
+  <select id="countInfo"
+          parameterMap="pramStatisticsVO"
+          statementType="CALLABLE">
+          {call checkcount(
+          #{workNumber,jdbcType=VARCHAR, mode=IN},
+          #{year, jdbcType=INTEGER,mode=IN},
+          #{month, jdbcType=INTEGER,mode=IN},
+          #{uname, jdbcType=VARCHAR,mode=OUT},
+          #{wNumber, jdbcType=VARCHAR,mode=OUT},
+          #{attencDays, jdbcType=INTEGER,mode=OUT},
+          #{sciktimes, jdbcType=INTEGER,mode=OUT},
+          #{affairtimes, jdbcType=INTEGER,mode=OUT},
+          #{latetimes, jdbcType=INTEGER,mode=OUT},
+          #{leaveearlytimes, jdbcType=INTEGER,mode=OUT},
+          #{minerstimes, jdbcType=INTEGER,mode=OUT}
+        )}
+  </select>
+
+  <parameterMap id="pramStatisticsVO" type="java.util.Map">
+    <parameter property="wNumber" jdbcType="VARCHAR" mode="IN"></parameter>
+    <parameter property="year" jdbcType="INTEGER" mode="IN"></parameter>
+    <parameter property="month" jdbcType="INTEGER" mode="IN"></parameter>
+    <parameter property="uname" jdbcType="VARCHAR" mode="OUT"></parameter>
+    <parameter property="workNumber" jdbcType="VARCHAR" mode="OUT"></parameter>
+    <parameter property="attencDays" jdbcType="INTEGER" mode="OUT"></parameter>
+    <parameter property="sciktimes" jdbcType="INTEGER" mode="OUT"></parameter>
+    <parameter property="affairtimes" jdbcType="INTEGER" mode="OUT"></parameter>
+    <parameter property="latetimes" jdbcType="INTEGER" mode="OUT"></parameter>
+    <parameter property="leaveearlytimes" jdbcType="INTEGER" mode="OUT"></parameter>
+    <parameter property="minerstimes" jdbcType="INTEGER" mode="OUT"></parameter>
+  </parameterMap>
+
+</mapper>
