@@ -48,7 +48,6 @@ public class CheckController {
 		return checkService.findPage(aliCheck, page, rows);
 	}
 
-
 	/**
 	 * 员工出勤信息统计
 	 */
